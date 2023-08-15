@@ -1,30 +1,15 @@
-from modes import one_point_two
 import sqlite3
 
 class Game: # Пока не знаю, нужно ли это делать в виде синглтон класса
-    def __init__(self, balance, mode):
+    def __init__(self, balance):
         self.balance = balance
-        self.set_mode(mode)
         self.current_bet = 0
 
     def set_balance(self, balance):
         pass
 
-    def set_mode(self, mode):
-        self.__mode = one_point_two
-
-    #   if mode == 1.2:
-    #       pass
-    #   elif mode == manual:
-    #       pass
-
-
-    def get_mode(self) -> ():
-        return self.__mode
-
     def set_current_bet(self, bet):
         pass
-
 
     def menu(self):
         pass
@@ -78,7 +63,6 @@ def usage():
 def main():
     welcome()
     balance = float(input("Введите баланс, с которым хотите играть: "))
-    mode = input("Введите коэффицент, на котором хотите играть. Пример: 1.2.\nВы можете выставлять коэффицент вручную каждую ставку, для этого введите manually.\n")
     game = Game(balance=balance, mode=mode)
     game.run()
 
