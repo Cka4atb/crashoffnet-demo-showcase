@@ -1,5 +1,3 @@
-import sqlite3
-
 class Game: # Пока не знаю, нужно ли это делать в виде синглтон класса
     def __init__(self, balance):
         self.balance = balance
