@@ -1,3 +1,4 @@
+from decimal import *
 class Game: # Пока не знаю, нужно ли это делать в виде синглтон класса
     def __init__(self, balance, gain):
         self.balance = balance
@@ -9,11 +10,11 @@ class Game: # Пока не знаю, нужно ли это делать в в�
         return self.__balance
 
     @balance.setter
-    def balance(self, balance) -> float:
+    def balance(self, balance) -> Decimal:
 
-        if not isinstance(balance, float):
-            if isinstance(balance, int):
-                balance = float(balance)
+        if not isinstance(balance, Decimal):
+            if isinstance(balance, int) or isinstance(balance, float):
+                balance = Decimal(balance)
             else:
                 self.__balance = None
 
@@ -27,9 +28,9 @@ class Game: # Пока не знаю, нужно ли это делать в в�
     @current_bet.setter
     def current_bet(self, bet):
 
-        if not isinstance(bet, float):
-            if isinstance(bet, int):
-                bet = float(bet)
+        if not isinstance(bet, Decimal):
+            if isinstance(bet, int) or isinstance(bet, float):
+                bet = Decimal(bet)
             else:
                 self._current_bet = None
 
@@ -41,16 +42,15 @@ class Game: # Пока не знаю, нужно ли это делать в в�
 
     @gain.setter
     def gain(self, gain):
-        if not isinstance(gain, float):
-            if isinstance(gain, int):
-                gain = float(gain)
+        if not isinstance(gain, Decimal):
+            if isinstance(gain, int) or isinstance(gain, float):
+                gain = Decimal(gain)
             else:
-                print("huy")
                 self._gain = None
 
         self._gain = gain
 
-    def potential_win(self) -> float:
+    def potential_win(self):
         return self.current_bet * self.gain
 
 
@@ -75,12 +75,14 @@ class Game: # Пока не знаю, нужно ли это делать в в�
     def play(self) -> int:
         print("Текущий баланс: %f$" % self.balance)
 
-        self.current_bet = float(input("Введите сумму ставки в $: "))
-        if self.current_bet == -1:
-            return -1
+        self.current_bet = Decimal(input("Введите сумму ставки в $: "))
+
         while self.current_bet <= 0 or self.current_bet > self.balance:
+            if self.current_bet == -1:
+                return -1
+
             print("Сумма ставки должна быть больше нуля и не превышать текущий баланс. Попробуйте ещё раз.")
-            self.current_bet = float(input("Введите сумму ставки в $: "))
+            self.current_bet = Decimal(input("Введите сумму ставки в $: "))
 
 
         print( "Потенциальный выигрыш: %f$ ".ljust(25) % self.potential_win() )
@@ -93,6 +95,7 @@ class Game: # Пока не знаю, нужно ли это делать в в�
 
         if win == "y":
             self.balance += self.potential_win()
+            self.balance = self.balance.quantize(Decimal('1.00'))
             print("\nПоздравляю!\n")
         else:
             print("Сожалею, что вы проиграли\n")
@@ -109,12 +112,12 @@ def main():
 
     #set start balance
     try:
-        balance = float(input("Введите баланс, с которым хотите играть: "))
+        balance = Decimal(input("Введите баланс, с которым хотите играть: "))
     except ValueError:
         print("Вы ввели неправильное значение!")
         while True:
             try:
-                balance = float(input("Введите баланс, с которым хотите играть: "))
+                balance = Decimal(input("Введите баланс, с которым хотите играть: "))
             except ValueError:
                 print("Вы ввели неправильное значение!")
             else:
@@ -129,12 +132,12 @@ def main():
 
     #set start gain
     try:
-        gain = float(input("Введите коэффицент, на который будет умножаться ставка: "))
+        gain = Decimal(input("Введите коэффицент, на который будет умножаться ставка: "))
     except ValueError:
         print("Вы ввели неправильное значение!")
         while True:
             try:
-                gain = float(input("Введите коэффицент, на который будет умножаться ставка: "))
+                gain = Decimal(input("Введите коэффицент, на который будет умножаться ставка: "))
             except ValueError:
                 print("Вы ввели неправильное значение!")
             else:
