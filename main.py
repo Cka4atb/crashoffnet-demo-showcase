@@ -26,6 +26,7 @@ class Game: # Пока не знаю, нужно ли это делать в в�
 
     @current_bet.setter
     def current_bet(self, bet):
+
         if not isinstance(bet, float):
             if isinstance(bet, int):
                 bet = float(bet)
@@ -33,6 +34,21 @@ class Game: # Пока не знаю, нужно ли это делать в в�
                 self._current_bet = None
 
         self._current_bet = bet
+
+    @property
+    def gain(self):
+        return self._gain
+
+    @gain.setter
+    def gain(self, gain):
+        if not isinstance(gain, float):
+            if isinstance(gain, int):
+                gain = float(gain)
+            else:
+                print("huy")
+                self._gain = None
+
+        self._gain = gain
 
     def potential_win(self) -> float:
         return self.current_bet * self.gain
@@ -77,7 +93,7 @@ class Game: # Пока не знаю, нужно ли это делать в в�
 
         if win == "y":
             self.balance += self.potential_win()
-            print("Поздравляю!\n")
+            print("\nПоздравляю!\n")
         else:
             print("Сожалею, что вы проиграли\n")
         
@@ -89,8 +105,47 @@ def usage():
 
 def main():
     welcome()
-    balance = float(input("Введите баланс, с которым хотите играть: "))
-    gain = float(input("Введите коэффицент, на которой будет умножаться ставка: "))
+
+
+    #set start balance
+    try:
+        balance = float(input("Введите баланс, с которым хотите играть: "))
+    except ValueError:
+        print("Вы ввели неправильное значение!")
+        while True:
+            try:
+                balance = float(input("Введите баланс, с которым хотите играть: "))
+            except ValueError:
+                print("Вы ввели неправильное значение!")
+            else:
+                break
+    except KeyboardInterrupt:
+        print("До свидания!")
+        exit()
+    except Exception as e:
+        print(f"Непредвиденная ошибка {e}. До свидания!")
+        exit()
+        
+
+    #set start gain
+    try:
+        gain = float(input("Введите коэффицент, на который будет умножаться ставка: "))
+    except ValueError:
+        print("Вы ввели неправильное значение!")
+        while True:
+            try:
+                gain = float(input("Введите коэффицент, на который будет умножаться ставка: "))
+            except ValueError:
+                print("Вы ввели неправильное значение!")
+            else:
+                break
+    except KeyboardInterrupt:
+        print("До свидания!")
+        exit()
+    except Exception as e:
+        print(f"Непредвиденная ошибка {e}. До свидания!")
+        exit()
+
     game = Game(balance=balance, gain=gain)
     game.run()
 
