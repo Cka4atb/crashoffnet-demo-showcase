@@ -1,7 +1,8 @@
 class Game: # Пока не знаю, нужно ли это делать в виде синглтон класса
-    def __init__(self, balance):
+    def __init__(self, balance, gain):
         self.balance = balance
         self.current_bet = 0
+        self.gain = gain
 
     def set_balance(self, balance):
         pass
@@ -11,6 +12,9 @@ class Game: # Пока не знаю, нужно ли это делать в в�
 
     def menu(self):
         pass
+
+    def potential_win(self) -> float:
+        return self.current_bet * self.gain
 
     # 0 - если, пользователь вышел сам 
     # 1 - если баланс меньше или равен 0
@@ -38,16 +42,16 @@ class Game: # Пока не знаю, нужно ли это делать в в�
             self.current_bet = float(input("Введите сумму ставки в $: "))
 
 
-        self.prize = self.get_mode()(self.current_bet)
-        print("Потенциальный выигрыш: %f$ ".ljust(25) % self.prize)
+        print( "Потенциальный выигрыш: %f$ ".ljust(25) % self.potential_win() )
         win = input("Ставка зашла? y/n: ")
         while win != "y" and win != "n":
             print("Вводить можно только y или n. Попробуй ещё раз.")
             win = input("Ставка зашла? y/n: ")
 
         self.balance -= self.current_bet
+
         if win == "y":
-            self.balance += self.prize
+            self.balance += self.potential_win()
             print("Поздравляю!\n")
         else:
             print("Сожалею, что вы проиграли\n")
@@ -61,7 +65,8 @@ def usage():
 def main():
     welcome()
     balance = float(input("Введите баланс, с которым хотите играть: "))
-    game = Game(balance=balance, mode=mode)
+    gain = float(input("Введите коэффицент, на которой будет умножаться ставка: "))
+    game = Game(balance=balance, gain=gain)
     game.run()
 
 if __name__ == '__main__':
