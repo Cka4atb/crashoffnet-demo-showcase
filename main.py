@@ -4,17 +4,45 @@ class Game: # Пока не знаю, нужно ли это делать в в�
         self.current_bet = 0
         self.gain = gain
 
-    def set_balance(self, balance):
-        pass
+    @property
+    def balance(self):
+        return self.__balance
 
-    def set_current_bet(self, bet):
-        pass
+    @balance.setter
+    def balance(self, balance) -> float:
 
-    def menu(self):
-        pass
+        if not isinstance(balance, float):
+            if isinstance(balance, int):
+                balance = float(balance)
+            else:
+                return None
+
+        self.__balance = balance
+
+        return self.balance
+
+    @property
+    def current_bet(self) -> float:
+        return self._current_bet
+
+    @current_bet.setter
+    def current_bet(self, bet) -> float:
+        if not isinstance(bet, float):
+            if isinstance(bet, int):
+                bet = float(bet)
+            else:
+                return None
+
+        self._current_bet = bet
+
+        return self.current_bet
 
     def potential_win(self) -> float:
         return self.current_bet * self.gain
+
+
+    def menu(self):
+        pass
 
     # 0 - если, пользователь вышел сам 
     # 1 - если баланс меньше или равен 0
