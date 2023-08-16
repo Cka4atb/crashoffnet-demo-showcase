@@ -15,27 +15,24 @@ class Game: # Пока не знаю, нужно ли это делать в в�
             if isinstance(balance, int):
                 balance = float(balance)
             else:
-                return None
+                self.__balance = None
 
         self.__balance = balance
 
-        return self.balance
 
     @property
     def current_bet(self) -> float:
         return self._current_bet
 
     @current_bet.setter
-    def current_bet(self, bet) -> float:
+    def current_bet(self, bet):
         if not isinstance(bet, float):
             if isinstance(bet, int):
                 bet = float(bet)
             else:
-                return None
+                self._current_bet = None
 
         self._current_bet = bet
-
-        return self.current_bet
 
     def potential_win(self) -> float:
         return self.current_bet * self.gain
