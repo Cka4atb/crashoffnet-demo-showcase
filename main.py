@@ -1,10 +1,16 @@
 from decimal import *
 class Game: # Пока не знаю, нужно ли это делать в виде синглтон класса
-    def __init__(self, balance, gain):
-        self.balance = balance
-        self.current_bet = 0
-        self.gain = gain
-
+    def __init__(self):
+        self.balance = None
+        self.current_bet = None
+        self.gain = None
+        self.handle_balance_input()
+        self.handle_gain_input()
+    # 
+    # 
+    # GETTERS AND SETTERS
+    #
+    #
     @property
     def balance(self):
         return self.__balance
@@ -20,9 +26,8 @@ class Game: # Пока не знаю, нужно ли это делать в в�
 
         self.__balance = balance
 
-
     @property
-    def current_bet(self) -> float:
+    def current_bet(self):
         return self._current_bet
 
     @current_bet.setter
@@ -49,6 +54,84 @@ class Game: # Пока не знаю, нужно ли это делать в в�
                 self._gain = None
 
         self._gain = gain
+
+    # 
+    # 
+    # INPUT HANDLERS
+    #
+    #
+    # def handle_decimal_input(self, getter):
+    #     while getter != None:
+    #         try:
+    #             balance_input = Decimal(input("Введите баланс, с которым хотите играть: "))
+    #         except ValueError:
+    #             print("Вы ввели неправильное значение!")
+    #         while True:
+    #             try:
+    #                 balance_input = Decimal(input("Введите баланс, с которым хотите играть: "))
+    #             except ValueError:
+    #                 print("Вы ввели неправильное значение!")
+    #             else:
+    #                 break
+    #         except KeyboardInterrupt:
+    #             print("До свидания!")
+    #             exit()
+    #         except Exception as e:
+    #             print(f"Непредвиденная ошибка {e}. До свидания!")
+    #             exit()
+    #         else:
+    #             self.balance = balance_input
+
+    def handle_balance_input(self):
+        while True:
+            try:
+                balance_input = Decimal(input("Введите баланс, с которым хотите играть: "))
+            except InvalidOperation:
+                print("Вы ввели неправильное значение!")
+            except KeyboardInterrupt:
+                print("До свидания!")
+                exit()
+            except Exception as e:
+                print(f"Непредвиденная ошибка {e}. До свидания!")
+                exit()
+            else:
+                self.balance = balance_input
+                break
+
+    def handle_current_bet_input(self):
+        while True:
+            try:
+                current_bet_input = Decimal(input("Введите сумму ставки в $: "))
+            except InvalidOperation:
+                print("Вы ввели неправильное значение!")
+            except KeyboardInterrupt:
+                print("До свидания!")
+                exit()
+            except Exception as e:
+                print(f"Непредвиденная ошибка {e}. До свидания!")
+                exit()
+            else:
+                self.current_bet = current_bet_input
+                break
+
+    def handle_gain_input(self):
+        while True:
+            try:
+                gain_input = Decimal(input("Введите баланс, с которым хотите играть: "))
+            except InvalidOperation:
+                print("Вы ввели неправильное значение!")
+            except KeyboardInterrupt:
+                print("До свидания!")
+                exit()
+            except Exception as e:
+                print(f"Непредвиденная ошибка {e}. До свидания!")
+                exit()
+            else:
+                self.gain = gain_input
+                break
+
+    def handle_win_input(self):
+        pass
 
     def potential_win(self):
         return self.current_bet * self.gain
@@ -111,45 +194,46 @@ def main():
 
 
     #set start balance
-    try:
-        balance = Decimal(input("Введите баланс, с которым хотите играть: "))
-    except ValueError:
-        print("Вы ввели неправильное значение!")
-        while True:
-            try:
-                balance = Decimal(input("Введите баланс, с которым хотите играть: "))
-            except ValueError:
-                print("Вы ввели неправильное значение!")
-            else:
-                break
-    except KeyboardInterrupt:
-        print("До свидания!")
-        exit()
-    except Exception as e:
-        print(f"Непредвиденная ошибка {e}. До свидания!")
-        exit()
+    # try:
+    #     balance = Decimal(input("Введите баланс, с которым хотите играть: "))
+    # except ValueError:
+    #     print("Вы ввели неправильное значение!")
+    #     while True:
+    #         try:
+    #             balance = Decimal(input("Введите баланс, с которым хотите играть: "))
+    #         except ValueError:
+    #             print("Вы ввели неправильное значение!")
+    #         else:
+    #             break
+    # except KeyboardInterrupt:
+    #     print("До свидания!")
+    #     exit()
+    # except Exception as e:
+    #     print(f"Непредвиденная ошибка {e}. До свидания!")
+    #     exit()
+    #handle_balance_input()
         
 
     #set start gain
-    try:
-        gain = Decimal(input("Введите коэффицент, на который будет умножаться ставка: "))
-    except ValueError:
-        print("Вы ввели неправильное значение!")
-        while True:
-            try:
-                gain = Decimal(input("Введите коэффицент, на который будет умножаться ставка: "))
-            except ValueError:
-                print("Вы ввели неправильное значение!")
-            else:
-                break
-    except KeyboardInterrupt:
-        print("До свидания!")
-        exit()
-    except Exception as e:
-        print(f"Непредвиденная ошибка {e}. До свидания!")
-        exit()
+    # try:
+    #     gain = Decimal(input("Введите коэффицент, на который будет умножаться ставка: "))
+    # except ValueError:
+    #     print("Вы ввели неправильное значение!")
+    #     while True:
+    #         try:
+    #             gain = Decimal(input("Введите коэффицент, на который будет умножаться ставка: "))
+    #         except ValueError:
+    #             print("Вы ввели неправильное значение!")
+    #         else:
+    #             break
+    # except KeyboardInterrupt:
+    #     print("До свидания!")
+    #     exit()
+    # except Exception as e:
+    #     print(f"Непредвиденная ошибка {e}. До свидания!")
+    #     exit()
 
-    game = Game(balance=balance, gain=gain)
+    game = Game()
     game.run()
 
 if __name__ == '__main__':
