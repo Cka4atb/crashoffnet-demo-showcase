@@ -86,7 +86,7 @@ class Game:
     def handle_gain_input(self):
         while True:
             try:
-                gain_input = Decimal(input("Введите баланс, с которым хотите играть: "))
+                gain_input = Decimal(input("Введите коэффицент, на который хотите ставить: "))
             except InvalidOperation:
                 print("Вы ввели неправильное значение!")
             except KeyboardInterrupt:
