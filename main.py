@@ -1,16 +1,12 @@
 from decimal import *
-class Game: # Пока не знаю, нужно ли это делать в виде синглтон класса
+class Game:
     def __init__(self):
         self.balance = None
         self.current_bet = None
         self.gain = None
         self.handle_balance_input()
         self.handle_gain_input()
-    # 
-    # 
-    # GETTERS AND SETTERS
-    #
-    #
+
     @property
     def balance(self):
         return self.__balance
@@ -54,33 +50,6 @@ class Game: # Пока не знаю, нужно ли это делать в в�
                 self._gain = None
 
         self._gain = gain
-
-    # 
-    # 
-    # INPUT HANDLERS
-    #
-    #
-    # def handle_decimal_input(self, getter):
-    #     while getter != None:
-    #         try:
-    #             balance_input = Decimal(input("Введите баланс, с которым хотите играть: "))
-    #         except ValueError:
-    #             print("Вы ввели неправильное значение!")
-    #         while True:
-    #             try:
-    #                 balance_input = Decimal(input("Введите баланс, с которым хотите играть: "))
-    #             except ValueError:
-    #                 print("Вы ввели неправильное значение!")
-    #             else:
-    #                 break
-    #         except KeyboardInterrupt:
-    #             print("До свидания!")
-    #             exit()
-    #         except Exception as e:
-    #             print(f"Непредвиденная ошибка {e}. До свидания!")
-    #             exit()
-    #         else:
-    #             self.balance = balance_input
 
     def handle_balance_input(self):
         while True:
@@ -140,9 +109,6 @@ class Game: # Пока не знаю, нужно ли это делать в в�
     def menu(self):
         pass
 
-    # 0 - если, пользователь вышел сам 
-    # 1 - если баланс меньше или равен 0
-    # 2 - если произошла ошибка
     def run(self) -> int: 
         print("Чтобы выйти из игры введите -1.\n")
         while True:
@@ -191,53 +157,9 @@ def usage():
 
 def main():
     welcome()
-
-
-    #set start balance
-    # try:
-    #     balance = Decimal(input("Введите баланс, с которым хотите играть: "))
-    # except ValueError:
-    #     print("Вы ввели неправильное значение!")
-    #     while True:
-    #         try:
-    #             balance = Decimal(input("Введите баланс, с которым хотите играть: "))
-    #         except ValueError:
-    #             print("Вы ввели неправильное значение!")
-    #         else:
-    #             break
-    # except KeyboardInterrupt:
-    #     print("До свидания!")
-    #     exit()
-    # except Exception as e:
-    #     print(f"Непредвиденная ошибка {e}. До свидания!")
-    #     exit()
-    #handle_balance_input()
-        
-
-    #set start gain
-    # try:
-    #     gain = Decimal(input("Введите коэффицент, на который будет умножаться ставка: "))
-    # except ValueError:
-    #     print("Вы ввели неправильное значение!")
-    #     while True:
-    #         try:
-    #             gain = Decimal(input("Введите коэффицент, на который будет умножаться ставка: "))
-    #         except ValueError:
-    #             print("Вы ввели неправильное значение!")
-    #         else:
-    #             break
-    # except KeyboardInterrupt:
-    #     print("До свидания!")
-    #     exit()
-    # except Exception as e:
-    #     print(f"Непредвиденная ошибка {e}. До свидания!")
-    #     exit()
-
     game = Game()
     game.run()
 
 if __name__ == '__main__':
     main()
 
-
-# Сделать так, чтобы выход из игры происходил при вводе баланса
