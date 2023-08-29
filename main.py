@@ -1,11 +1,20 @@
 from decimal import *
+
+class NoneError(BaseException):
+    "Raised when the input is previuos value, but previuos value is None"
+    pass
+
+class InvalidBetException(BaseException):
+    "Raised when bet input is > current balance (self.balance) or bet input is <= 0"
+    pass
+
 class Game:
     def __init__(self):
         self.balance = None
         self.current_bet = None
         self.gain = None
+
         self.handle_balance_input()
-        self.handle_gain_input()
 
     @property
     def balance(self):
@@ -54,7 +63,14 @@ class Game:
     def handle_balance_input(self):
         while True:
             try:
-                balance_input = Decimal(input("Введите баланс, с которым хотите играть: "))
+                balance_input = input("Введите баланс, с которым хотите играть: ")
+
+                if balance_input == "-1":
+                    print("До свидания!")
+                    exit()
+                else:
+                    balance_input = Decimal(balance_input)
+
             except InvalidOperation:
                 print("Вы ввели неправильное значение!")
             except KeyboardInterrupt:
@@ -70,7 +86,32 @@ class Game:
     def handle_current_bet_input(self):
         while True:
             try:
-                current_bet_input = Decimal(input("Введите сумму ставки в $: "))
+                current_bet_input = input("Введите сумму ставки в $: ")
+
+                if current_bet_input == "-1" or current_bet_input == "q":
+                    print("До свидания!")
+                    exit()
+                elif current_bet_input == "":
+                    if self.current_bet == None:
+                        raise(NoneError)
+                    else:
+                        print(self.current_bet)
+                        break
+                        return
+                elif current_bet_input == "a":
+                    self.current_bet =  self.balance
+                    break
+                    return
+
+                else:
+                    current_bet_input = Decimal(current_bet_input)
+                    if current_bet_input > self.balance or current_bet_input <= 0:
+                        raise(InvalidBetException)
+
+            except InvalidBetException:
+                print("Сумма ставки не может превышать текущий баланс и не может быть меньше или равен 0!")
+            except NoneError:
+                print("Вы не можете оставить сумму предыдущей ставки, не сделав её!")
             except InvalidOperation:
                 print("Вы ввели неправильное значение!")
             except KeyboardInterrupt:
@@ -82,6 +123,8 @@ class Game:
             else:
                 self.current_bet = current_bet_input
                 break
+
+        return 
 
     def handle_gain_input(self):
         while True:
@@ -100,7 +143,7 @@ class Game:
                 break
 
     def handle_win_input(self):
-        pass
+        pass 
 
     def potential_win(self):
         return self.current_bet * self.gain
@@ -124,15 +167,8 @@ class Game:
     def play(self) -> int:
         print("Текущий баланс: %f$" % self.balance)
 
-        self.current_bet = Decimal(input("Введите сумму ставки в $: "))
-
-        while self.current_bet <= 0 or self.current_bet > self.balance:
-            if self.current_bet == -1:
-                return -1
-
-            print("Сумма ставки должна быть больше нуля и не превышать текущий баланс. Попробуйте ещё раз.")
-            self.current_bet = Decimal(input("Введите сумму ставки в $: "))
-
+        self.handle_current_bet_input()
+        self.handle_gain_input()
 
         print( "Потенциальный выигрыш: %f$ ".ljust(25) % self.potential_win() )
         win = input("Ставка зашла? y/n: ")
